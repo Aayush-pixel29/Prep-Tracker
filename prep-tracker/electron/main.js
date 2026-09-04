@@ -22,7 +22,26 @@ if (!gotTheLock) {
     }
   });
 
-  // Proceed with regular startup
+  app.whenReady().then(async () => {
+    // Initialize database
+    initDatabase();
+
+    // Create the window
+    createWindow();
+
+    // Start API server for Chrome extension
+    startApiServer(getDb());
+
+    // Setup system tray
+    setupTray(mainWindow);
+
+    // Setup notification scheduler
+    setupNotifications(getDb());
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+  });
 }
 
 function createWindow() {
@@ -66,26 +85,7 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(async () => {
-  // Initialize database
-  initDatabase();
 
-  // Create the window
-  createWindow();
-
-  // Start API server for Chrome extension
-  startApiServer(getDb());
-
-  // Setup system tray
-  setupTray(mainWindow);
-
-  // Setup notification scheduler
-  setupNotifications(getDb());
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
 
 app.on('before-quit', () => {
   app.isQuitting = true;
