@@ -1,0 +1,255 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: #1A1D2E;
+  background: #FFFFFF;
+  width: 320px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.popup {
+  padding: 16px;
+}
+
+/* Header */
+.popup__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F0F2F8;
+}
+
+.popup__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup__logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #4F6EF7, #8B5CF6);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.popup__logo-text {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.popup__status {
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.popup__status--connected {
+  color: #22C55E;
+}
+
+.popup__status--disconnected {
+  color: #EF4444;
+}
+
+.popup__status--checking {
+  color: #F59E0B;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Stats Row */
+.popup__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.popup__stat {
+  text-align: center;
+  padding: 12px 8px;
+  background: #F8F9FC;
+  border-radius: 10px;
+  transition: transform 0.15s ease;
+}
+
+.popup__stat:hover {
+  transform: translateY(-1px);
+}
+
+.popup__stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #4F6EF7;
+  line-height: 1;
+}
+
+.popup__stat-label {
+  font-size: 10px;
+  color: #6B7194;
+  margin-top: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Streak Bar */
+.popup__streak-bar {
+  margin-bottom: 16px;
+}
+
+.popup__streak-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6B7194;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.popup__streak-bar-track {
+  height: 8px;
+  background: #F0F2F8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.popup__streak-bar-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #4F6EF7, #8B5CF6);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Action Buttons */
+.popup__actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.popup__btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.popup__btn--primary {
+  background: linear-gradient(135deg, #4F6EF7, #8B5CF6);
+  color: white;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
+}
+
+.popup__btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 110, 247, 0.4);
+}
+
+.popup__btn--secondary {
+  background: #F0F2F8;
+  color: #1A1D2E;
+}
+
+.popup__btn--secondary:hover {
+  background: #E8EAF0;
+}
+
+/* Platforms */
+.popup__platforms {
+  margin-bottom: 12px;
+}
+
+.popup__platform {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: background 0.15s ease;
+}
+
+.popup__platform:hover {
+  background: #F8F9FC;
+}
+
+.popup__platform-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.popup__platform-icon--leetcode { background: #FFF3E0; color: #FFA116; }
+.popup__platform-icon--neetcode { background: #E8ECFE; color: #4F46E5; }
+.popup__platform-icon--hackerrank { background: #E8FFF0; color: #00EA64; }
+.popup__platform-icon--gfg { background: #E8F5E9; color: #2F8D46; }
+
+.popup__platform-info {
+  flex: 1;
+}
+
+.popup__platform-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.popup__platform-status {
+  font-size: 10px;
+  color: #9DA3C0;
+}
+
+/* Footer */
+.popup__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #F0F2F8;
+}
+
+.popup__link {
+  font-size: 11px;
+  color: #4F6EF7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.popup__link:hover {
+  text-decoration: underline;
+}
+
+.popup__version {
+  font-size: 10px;
+  color: #9DA3C0;
+}

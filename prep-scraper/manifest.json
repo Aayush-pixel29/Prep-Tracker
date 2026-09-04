@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "PrepScraper — AI/ML Prep Tracker",
+  "version": "1.0.0",
+  "description": "Auto-scrape your progress from LeetCode, NeetCode, HackerRank, and GeeksForGeeks. Syncs with PrepTracker desktop app.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "https://neetcode.io/*",
+    "https://www.hackerrank.com/*",
+    "https://www.geeksforgeeks.org/*",
+    "http://localhost:3847/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/*"],
+      "js": ["content-scripts/common.js", "content-scripts/leetcode.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://neetcode.io/*"],
+      "js": ["content-scripts/common.js", "content-scripts/neetcode.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.hackerrank.com/*"],
+      "js": ["content-scripts/common.js", "content-scripts/hackerrank.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.geeksforgeeks.org/*"],
+      "js": ["content-scripts/common.js", "content-scripts/geeksforgeeks.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrepScraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup">
+    <div class="popup__header">
+      <div class="popup__logo">
+        <div class="popup__logo-icon">P</div>
+        <span class="popup__logo-text">PrepScraper</span>
+      </div>
+      <div id="connectionStatus" class="popup__status popup__status--checking">●</div>
+    </div>
+
+    <div class="popup__stats">
+      <div class="popup__stat">
+        <div class="popup__stat-value" id="todayProblems">-</div>
+        <div class="popup__stat-label">Today</div>
+      </div>
+      <div class="popup__stat">
+        <div class="popup__stat-value" id="streakCount">-</div>
+        <div class="popup__stat-label">Streak 🔥</div>
+      </div>
+      <div class="popup__stat">
+        <div class="popup__stat-value" id="totalCount">-</div>
+        <div class="popup__stat-label">Total</div>
+      </div>
+    </div>
+
+    <div class="popup__streak-bar">
+      <div class="popup__streak-bar-label">
+        <span>Daily Goal</span>
+        <span id="goalProgress">0/3</span>
+      </div>
+      <div class="popup__streak-bar-track">
+        <div class="popup__streak-bar-fill" id="goalBar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div class="popup__actions">
+      <button class="popup__btn popup__btn--primary" id="syncBtn">
+        🔄 Sync Now
+      </button>
+      <button class="popup__btn popup__btn--secondary" id="openAppBtn">
+        📊 Open Dashboard
+      </button>
+    </div>
+
+    <div class="popup__platforms" id="platformsList">
+      <!-- Dynamically populated -->
+    </div>
+
+    <div class="popup__footer">
+      <a href="#" id="optionsLink" class="popup__link">⚙️ Settings</a>
+      <span class="popup__version">v1.0.0</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
