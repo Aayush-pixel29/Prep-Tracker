@@ -10,6 +10,8 @@
     setTimeout(() => scrapeProfileFromPage(), 3000);
   }
 
+  let lastReportedProblem = null;
+
   // Detect when user solves a problem (submission accepted)
   const observer = new MutationObserver(debounce(() => {
     detectAcceptedSubmission();
@@ -115,7 +117,8 @@
       const difficulty = extractDifficulty();
       const category = extractCategory();
 
-      if (problemName) {
+      if (problemName && problemName !== lastReportedProblem) {
+        lastReportedProblem = problemName;
         sendToBackground('PROBLEM_SOLVED', {
           platform: 'leetcode',
           problem_name: problemName,

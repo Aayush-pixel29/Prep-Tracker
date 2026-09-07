@@ -239,6 +239,59 @@ function startApiServer(db) {
     res.json({ success: true });
   });
 
+  // ─── Custom Videos CRUD ───
+  app.get('/api/custom-videos', (req, res) => {
+    const { section_id, topic_name } = req.query;
+    let sql = 'SELECT * FROM custom_videos WHERE 1=1';
+    const params = [];
+    if (section_id) { sql += ' AND section_id = ?'; params.push(section_id); }
+    if (topic_name) { sql += ' AND topic_name = ?'; params.push(topic_name); }
+    sql += ' ORDER BY added_at DESC';
+    try {
+      res.json(db.prepare(sql).all(...params));
+    } catch (err) {
+      // Table might not exist yet (first run before DB migration)
+      res.json([]);
+    }
+  });
+
+  app.post('/api/custom-videos', (req, res) => {
+    const { section_id, topic_name, video_title, youtube_url } = req.body;
+    try {
+      const result = db.prepare(
+        'INSERT INTO custom_videos (section_id, topic_name, video_title, youtube_url) VALUES (?, ?, ?, ?)'
+      ).run(section_id, topic_name, video_title || 'Untitled', youtube_url);
+      res.json({ id: result.lastInsertRowid, success: true });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.delete('/api/custom-videos/:id', (req, res) => {
+    try {
+      db.prepare('DELETE FROM custom_videos WHERE id = ?').run(req.params.id);
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  // ─── Role endpoints ───
+  app.get('/api/role', (req, res) => {
+    const role = db.prepare('SELECT value FROM settings WHERE key = ?').get('selected_role')?.value || '';
+    const language = db.prepare('SELECT value FROM settings WHERE key = ?').get('preferred_language')?.value || 'python';
+    res.json({ role, language });
+  });
+
+  app.put('/api/role', (req, res) => {
+    const { role, language } = req.body;
+    const stmt = db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
+    if (role !== undefined) stmt.run('selected_role', role);
+    if (language !== undefined) stmt.run('preferred_language', language);
+    stmt.run('onboarding_complete', 'true');
+    res.json({ success: true });
+  });
+
   // ─── Stats aggregation ───
   app.get('/api/stats/overview', (req, res) => {
     const today = new Date().toISOString().split('T')[0];

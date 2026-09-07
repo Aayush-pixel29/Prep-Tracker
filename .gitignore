@@ -11,19 +11,31 @@ release/
 build/
 *.exe
 *.blockmap
+*.zip
+*.dmg
+*.AppImage
 
 # Databases & local state
 *.db
 *.db-journal
 *.sqlite
 *.sqlite3
+prep_tracker.db
 preptracker.db
 
 # Logs
 *.log
+app_stderr.log
+app_stdout.log
+prep_app.log
 
 # OS & IDE
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

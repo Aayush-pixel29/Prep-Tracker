@@ -7,6 +7,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   closeWindow: () => ipcRenderer.send('window-close'),
   isMaximized: () => ipcRenderer.invoke('window-is-maximized'),
 
+  // Open external URLs in default browser
+  openExternal: (url) => ipcRenderer.send('open-external', url),
+
   // Listen for maximize state changes
   onMaximizeChange: (callback) => {
     ipcRenderer.on('maximize-change', (_, isMax) => callback(isMax));

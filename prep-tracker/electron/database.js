@@ -85,6 +85,16 @@ function initDatabase() {
       key TEXT PRIMARY KEY,
       value TEXT
     );
+
+    -- Custom videos saved by user for roadmap topics
+    CREATE TABLE IF NOT EXISTS custom_videos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      section_id TEXT NOT NULL,
+      topic_name TEXT NOT NULL,
+      video_title TEXT,
+      youtube_url TEXT NOT NULL,
+      added_at DATETIME DEFAULT (datetime('now', 'localtime'))
+    );
   `);
 
   // Insert default settings
@@ -99,6 +109,9 @@ function initDatabase() {
   insertSetting.run('hackerrank_username', '');
   insertSetting.run('gfg_username', '');
   insertSetting.run('api_port', '3847');
+  insertSetting.run('selected_role', '');
+  insertSetting.run('preferred_language', 'python');
+  insertSetting.run('onboarding_complete', 'false');
 
   console.log('[DB] Database initialized at:', dbPath);
   return db;

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StatsCard from '../components/StatsCard';
 import ProgressRing from '../components/ProgressRing';
 import HeatmapCalendar from '../components/HeatmapCalendar';
 import PomodoroTimer from '../components/PomodoroTimer';
 import { API_BASE, getTodaysQuote, formatTime, PILLAR_NAMES, PILLAR_ICONS } from '../utils/helpers';
+import { useRole } from '../utils/RoleContext';
 
 export default function Dashboard() {
+  const { activeRole, roleData } = useRole();
+  const navigate = useNavigate();
   const [overview, setOverview] = useState(null);
   const [streaks, setStreaks] = useState(null);
   const [heatmapData, setHeatmapData] = useState({});
   const [recentProblems, setRecentProblems] = useState([]);
+  const [roadmapProgress, setRoadmapProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const quote = getTodaysQuote();
 
@@ -19,8 +24,9 @@ export default function Dashboard() {
       fetch(`${API_BASE}/api/streaks`).then(r => r.json()),
       fetch(`${API_BASE}/api/daily-logs?days=365`).then(r => r.json()),
       fetch(`${API_BASE}/api/problems?limit=5`).then(r => r.json()),
+      fetch(`${API_BASE}/api/roadmap`).then(r => r.json()),
     ])
-      .then(([ov, st, logs, probs]) => {
+      .then(([ov, st, logs, probs, roadmap]) => {
         setOverview(ov);
         setStreaks(st);
         setRecentProblems(probs);
@@ -29,6 +35,12 @@ export default function Dashboard() {
         const map = {};
         logs.forEach(l => { map[l.date] = l.problems_solved; });
         setHeatmapData(map);
+
+        // Build roadmap progress
+        const rmap = {};
+        roadmap.forEach(item => { rmap[`${item.pillar}|${item.topic}`] = item.status; });
+        setRoadmapProgress(rmap);
+
         setLoading(false);
       })
       .catch(() => {
@@ -57,6 +69,25 @@ export default function Dashboard() {
   const weekGoal = (streaks?.goalProblems || 3) * 7;
   const weekProgress = Math.min(((overview?.weekProblems || 0) / weekGoal) * 100, 100);
 
+  // Calculate roadmap progress for active role
+  let roleProgress = { total: 0, completed: 0, percent: 0 };
+  let nextTopic = null;
+  if (roleData && activeRole) {
+    roleData.phases.forEach(phase => {
+      phase.sections.forEach(section => {
+        section.topics.forEach(t => {
+          roleProgress.total++;
+          const status = roadmapProgress[`${activeRole}:${section.id}|${t.name}`];
+          if (status === 'completed') roleProgress.completed++;
+          if (!nextTopic && status !== 'completed') {
+            nextTopic = { topic: t, sectionId: section.id, phaseName: phase.name };
+          }
+        });
+      });
+    });
+    roleProgress.percent = roleProgress.total > 0 ? Math.round((roleProgress.completed / roleProgress.total) * 100) : 0;
+  }
+
   return (
     <div className="animate-fade-in">
       <div className="page-header">
@@ -67,6 +98,29 @@ export default function Dashboard() {
       </div>
 
       <div className="page-body">
+        {/* Role Journey Banner */}
+        {roleData && (
+          <div
+            className="dashboard-role-banner"
+            style={{ background: roleData.gradient }}
+            onClick={() => navigate('/journey')}
+          >
+            <div className="dashboard-role-banner__left">
+              <div className="dashboard-role-banner__icon">{roleData.icon}</div>
+              <div>
+                <div className="dashboard-role-banner__role">{roleData.name} Journey</div>
+                <div className="dashboard-role-banner__progress">{roleProgress.completed}/{roleProgress.total} topics • {roleProgress.percent}% complete</div>
+              </div>
+            </div>
+            {nextTopic && (
+              <div className="dashboard-role-banner__next" onClick={e => { e.stopPropagation(); navigate('/roadmap'); }}>
+                <span className="dashboard-role-banner__next-label">Next up:</span>
+                <span className="dashboard-role-banner__next-topic">{nextTopic.topic.name}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Quick Stats Row */}
         <div className="stats-grid">
           <StatsCard

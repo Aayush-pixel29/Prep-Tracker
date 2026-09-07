@@ -1,35 +1,19 @@
-# ⚡ PrepTracker: Jarvis-Class Career Mastery & Preparation Ecosystem
+# ⚡ PrepTracker: Jarvis-Class Career Mastery & Engineering Ecosystem
 
-> **Master DSA, System Design, AI/ML Pipelines & Senior Engineer Trade-offs — Powered by Habit Gamification, Neural Focus Audio, Live Market Intelligence, and Automated LeetCode Tracking.**
+> **Master DSA, System Design, AI/ML Pipelines & Senior Engineer Trade-offs — Powered by Habit Gamification, Neural Focus Audio, and Live Market Intelligence.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg)]()
 [![Electron](https://img.shields.io/badge/Electron-28.0-47848F.svg)](https://www.electronjs.org/)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB.svg)](https://react.dev/)
 [![SQLite](https://img.shields.io/badge/Database-SQLite3-003B57.svg)](https://www.sqlite.org/)
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension%20Manifest%20V3-yellow.svg)]()
 
 ---
 
-## 🌟 Overview
+## 🌟 The Problem PrepTracker Solves
 Preparing for Tier-1 Tech (Google, Meta, OpenAI, Anthropic, Stripe, Amazon) usually means juggling 10 different tabs: LeetCode, NeetCode, YouTube tutorials, System Design blogs, tech news, and Pomodoro timers. Most engineers drop off due to lack of consistency, overwhelming topic lists, and disconnected tools.
 
-**PrepTracker unifies the entire career preparation pipeline into an offline-first desktop OS and companion Chrome Extension.**
-
-```
-Prep-Tracker/
-├── prep-tracker/          # Electron + React + SQLite3 Desktop Application
-│   ├── electron/          # Main Process, IPC Handlers, SQLite Local DB Engine
-│   ├── server/            # Express Local REST API Engine (Port 4242)
-│   ├── src/               # React 18 UI (Cyber-Linear Design System)
-│   │   ├── components/    # Arc-Reactor Focus Studio, Sidebar HUD, Full-Screen Topic Studio
-│   │   ├── pages/         # Dashboard, Practice Arena, Tech Radar, Senior Mindset, Roadmap
-│   │   └── utils/         # Gamification Context, 5-Language DB, Role Roadmaps
-│   └── LINKEDIN_LAUNCH_POST.md  # Viral Launch Kit & Recruiter Attraction Guide
-└── prep-scraper/          # Chrome Extension (Manifest V3)
-    ├── content-scripts/   # Zero-friction auto-logging from LeetCode problem submissions
-    └── popup/             # Quick stats & streak monitor in browser toolbar
-```
+**PrepTracker unifies the entire career preparation pipeline into an offline-first, cybernetic desktop application.**
 
 ---
 
@@ -43,13 +27,13 @@ Prep-Tracker/
   - `Mark XLII (Senior Engineer)` — Lv 15-29
   - `Mark LXXXV (Staff Architect)` — Lv 30-49
   - `JARVIS Protocol (Principal Master)` — Lv 50+
-- **Daily Protocol Quests**: 24-hour resetting challenge board with instant rewards.
-- **Hall of Achievements**: 8 unlockable badges with rarity tiers and glow animations.
+- **Daily Protocol Quests**: Daily 24-hour objectives with instant claimable rewards.
+- **Hall of Achievements**: 8 unlockable badges ranging from *First Blood* to *Streak Immortal*.
 
 ### 2. 🧘 Deep Work Studio & Neural Soundscapes
 - **Arc-Reactor Circular Pomodoro**: 25m Focus Flow & 5m Recharge modes.
 - **Web Audio API Native Soundscapes**:
-  - `🧠 40Hz Gamma Wave`: Binaural beat tuned for cognitive focus and dopamine retention.
+  - `🧠 40Hz Gamma Wave`: Binaural beat tuned for intense cognitive concentration.
   - `🚀 Deep Space Engine`: Low-frequency rumble for masking distractions.
   - `🌧️ Cyber Warm Rain`: Pink/brown noise synthesis for calm flow states.
 
@@ -57,7 +41,7 @@ Prep-Tracker/
 - **Role-Specific Tracks**: AI Engineer, Machine Learning Engineer, Software Developer, Mobile App Developer, Cloud/DevOps Architect.
 - **5-Language Synchronized Solutions**: Switch seamlessly between **Python, Java, C++, C, and JavaScript** for every single DSA topic.
 - **Full-Screen Focus Mode (`⛶`)**: Expand the study canvas to eliminate all visual distractions.
-- **Interactive Step-by-Step Traces**: Visual pointer tracking and state mutation tables for canonical interview problems (*Two Sum*, *Valid Anagram*, *Reverse Linked List*).
+- **Interactive Step-by-Step Traces**: Visual pointer tracking and state mutation tables for canonical interview problems (e.g. *Two Sum*, *Valid Anagram*, *Reverse Linked List*).
 - **Embedded Curated Video Lessons**: High-yield YouTube lectures from NeetCode, Striver, freeCodeCamp, and Tech With Tim.
 
 ### 4. ⚡ Unified Practice Arena (NeetCode 150 + Striver SDE + Blind 75)
@@ -74,9 +58,6 @@ Prep-Tracker/
 - **Architectural Trade-Off Matrices**: First-principles frameworks for CAP/PACELC, Polyglot Persistence (SQL vs NoSQL vs NewSQL), Cache-Aside vs Write-Behind, and Modular Monoliths vs Microservices.
 - **Word-for-Word Speaking Scripts**: 1-click copyable executive scripts for STAR behavioral questions, database scaling, and technical conflict resolution.
 
-### 7. 🔌 Chrome Extension LeetCode Auto-Scraper
-- Automatically detects successful submissions on `leetcode.com/problems/*` and syncs problem title, difficulty, and timestamp directly to the local desktop database via REST API.
-
 ---
 
 ## 🏗️ Architecture & Tech Stack
@@ -89,42 +70,54 @@ graph TD
     D -->|Web Audio API| E[Binaural & Ambient Sound Engine]
     D -->|Context State Engine| F[RoleProvider & GamificationProvider]
     D -->|LocalStorage Cache| G[XP, Badges & Quests Persistence]
-    H[Chrome Extension Scraper] -->|POST /api/submissions| C
 ```
+
+- **Frontend**: React 18, React Router v6, Lucide Icons, Pure Vanilla CSS (Cyber-Linear Design System).
+- **Desktop Wrapper**: Electron 28 with secure context isolation and custom Windows frameless TitleBar.
+- **Audio Engine**: Web Audio API (zero external sound asset dependencies).
+- **Backend**: Express.js with `better-sqlite3` database engine.
 
 ---
 
-## 📦 Quick Start & Setup
+## 📦 Installation & Setup
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
+- `npm` or `yarn`
 
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/Aayush-pixel29/Prep-Tracker.git
-cd Prep-Tracker
+cd Prep-Tracker/prep-tracker
 ```
 
-### 2. Run Desktop App
+### 2. Install dependencies
 ```bash
-cd prep-tracker
 npm install
+```
+
+### 3. Run in Development Mode
+```bash
 npm run dev
 ```
 
-### 3. Build Standalone Desktop Installer (.exe)
+### 4. Build Production Desktop Installer (.exe)
 ```bash
-cd prep-tracker
 npm run build
 ```
-The compiled installer will be in `prep-tracker/dist-electron/PrepTracker Setup 1.0.0.exe`.
+The compiled installer will be located in `dist-electron/PrepTracker Setup 1.0.0.exe`.
 
-### 4. Load Chrome Extension
-1. Open Google Chrome and navigate to `chrome://extensions/`.
-2. Toggle on **Developer mode** in the top right.
-3. Click **Load unpacked** and select the `prep-scraper/` directory.
+---
+
+## 🎮 Keyboard Shortcuts & Pro Tips
+- `⛶ Full Screen`: Toggle in any topic detail view to maximize reading space.
+- `🔄 Switch Role`: Switch between AI Engineer, Software Dev, and Mobile Dev anytime from the sidebar.
+- `🧘 Deep Work`: Engage 25m Pomodoro with 40Hz Gamma wave for maximum dopamine retention.
 
 ---
 
 ## 🤝 Contributing
-Contributions, bug reports, and feature requests are welcome! Feel free to open issues or submit pull requests.
+Contributions, bug reports, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Aayush-pixel29/Prep-Tracker/issues).
 
 ---
 
