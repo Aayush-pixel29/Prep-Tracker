@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrepTracker ⚡ — Jarvis-Class Career Mastery & Preparation Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0A0F1D;
+      --bg-card: #111827;
+      --bg-card-hover: #1E293B;
+      --cyan: #38BDF8;
+      --purple: #8B5CF6;
+      --pink: #EC4899;
+      --green: #10B981;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: rgba(255, 255, 255, 0.08);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      overflow-x: hidden;
+      selection-background-color: var(--cyan);
+    }
+
+    /* Ambient Background Glow */
+    .glow-bg {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 70%);
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      font-size: 24px;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .nav-github-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan);
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #38BDF8 0%, #3B82F6 100%);
+      color: #0A0F1D;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-primary-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-secondary-gh {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary-gh:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-subinfo {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* App Preview Frame */
+    .preview-frame {
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      background: #0F172A;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(56, 189, 248, 0.15);
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+
+    .preview-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      background: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .preview-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #EF4444; }
+    .dot-yellow { background: #F59E0B; }
+    .dot-green { background: #10B981; }
+
+    .preview-body {
+      padding: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: left;
+    }
+
+    .hud-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .hud-box-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hud-box-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .hud-box-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Features Grid */
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.25s ease;
+    }
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .feature-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Steps Section */
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+
+    .step-num {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 38px; }
+      .preview-body { grid-template-columns: 1fr; }
+      .steps-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <div class="container">
+    <!-- Navbar -->
+    <nav>
+      <a href="#" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span>PrepTracker</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="https://github.com/Aayush-pixel29/Prep-Tracker" target="_blank" class="nav-github-btn">
+          <span>⭐ Star on GitHub</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="badge-pill">🛡️ The Jarvis OS For Technical Interviews</div>
+      <h1 class="hero-title">
+        Master Tech Preparation with <br />
+        <span class="gradient-text">Addictive Flow & Staff Mindset</span>
+      </h1>
+      <p class="hero-desc">
+        Stop juggling 20 disconnected tabs. PrepTracker unifies habit gamification, 40Hz neural audio, multi-language DSA traces, unified problem sheets, and 2026 market intelligence into one blazing fast desktop OS.
+      </p>
+
+      <div class="cta-group">
+        <a href="https://github.com/Aayush-pixel29/Prep-Tracker/releases" target="_blank" class="btn-primary-download">
+          <span>⚡ Download for Windows (.exe)</span>
+        </a>
+        <a href="https://github.com/Aayush-pixel29/Prep-Tracker" target="_blank" class="btn-secondary-gh">
+          <span>📂 Explore GitHub Repo</span>
+        </a>
+      </div>
+      <p class="hero-subinfo">Free & Open Source (MIT) • Windows 10/11 • 100% Offline-First</p>
+    </section>
+
+    <!-- Live Preview Frame -->
+    <div class="preview-frame">
+      <div class="preview-bar">
+        <div class="preview-dot dot-red"></div>
+        <div class="preview-dot dot-yellow"></div>
+        <div class="preview-dot dot-green"></div>
+        <span style="font-size: 11px; color: #64748B; margin-left: 8px;">PrepTracker HUD — Flow State Active</span>
+      </div>
+      <div class="preview-body">
+        <div class="hud-box">
+          <div class="hud-box-title">🛡️ Suit Evolution</div>
+          <div class="hud-box-val">Mark VII (Associate)</div>
+          <div class="hud-box-desc">Level 8 • 450 XP • 85% to Senior Suit Tier</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-box-title">🧘 Neural Focus Studio</div>
+          <div class="hud-box-val">40Hz Gamma Beat</div>
+          <div class="hud-box-desc">25m Flow Session Active • Web Audio API</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-box-title">⚡ Practice Arena</div>
+          <div class="hud-box-val">NeetCode 150 + SDE</div>
+          <div class="hud-box-desc">30+ Canonical Problems • Google, Meta, Uber tags</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="section-header">
+        <h2 class="section-title">Everything You Need to Stand Out in the Top 1%</h2>
+        <p class="section-desc">Engineered for candidates aiming for FAANG, OpenAI, Stripe, and high-growth AI startups.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🛡️</span>
+          <h3 class="feature-title">Habit Gamification & Suit Tiers</h3>
+          <p class="feature-desc">Earn XP for every mastered topic, deep work session, and interview script. Level up from Mark I to JARVIS Protocol with daily 24h quests.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🧘</span>
+          <h3 class="feature-title">Arc-Reactor Deep Work Studio</h3>
+          <p class="feature-desc">Integrated 25m Pomodoro with zero-dependency Web Audio API soundscapes (40Hz Gamma wave, Deep Space Engine, Cyber Warm Rain).</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🗺️</span>
+          <h3 class="feature-title">5-Language Synchronized DSA</h3>
+          <p class="feature-desc">Switch instantly between Python, Java, C++, C, and JavaScript for every algorithm. Full-Screen Studio mode with interactive visual step tracers.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3 class="feature-title">Unified Practice Arena</h3>
+          <p class="feature-desc">NeetCode 150, Striver SDE Sheet, and Blind 75 filtered by topic, difficulty, and company tags with direct 1-click external browser solving.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📡</span>
+          <h3 class="feature-title">Live 2026 Tech Radar</h3>
+          <p class="feature-desc">Curated intelligence on DeepSeek V3/R1 architecture, LangGraph multi-agent loops, vLLM PagedAttention, and Rust high-performance backends.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🧠</span>
+          <h3 class="feature-title">Staff Engineer Power Scripts</h3>
+          <p class="feature-desc">1st-principles trade-off matrices (CAP, SQL vs NoSQL, Cache-Aside) and word-for-word 60-second interview speaking scripts with 1-click copy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works">
+      <div class="section-header">
+        <h2 class="section-title">Get Started in 3 Simple Steps</h2>
+      </div>
+      <div class="steps-container">
+        <div class="step-card">
+          <span class="step-num">Step 01</span>
+          <h3 class="step-title">Download the Installer</h3>
+          <p class="step-desc">Grab the latest <code>PrepTracker Setup 1.0.0.exe</code> directly from GitHub Releases or build from source.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">Step 02</span>
+          <h3 class="step-title">Choose Your Target Role</h3>
+          <p class="step-desc">Select AI Engineer, ML Engineer, Software Developer, or Mobile Dev to personalize your roadmap and language stack.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">Step 03</span>
+          <h3 class="step-title">Lock into Flow State</h3>
+          <p class="step-desc">Turn on 40Hz Gamma audio, complete daily protocol quests, and watch your suit tier evolve as you master interviews.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 PrepTracker. Built with Electron, React, and SQLite3. Open-source under the MIT License.</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/Aayush-pixel29/Prep-Tracker" target="_blank" style="color: var(--cyan); text-decoration: none;">GitHub Repository</a> • 
+        <a href="https://github.com/Aayush-pixel29/Prep-Tracker/releases" target="_blank" style="color: var(--cyan); text-decoration: none;">Releases & Downloads</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
