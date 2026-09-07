@@ -83,13 +83,13 @@ Prep-Tracker/
 
 ```mermaid
 graph TD
-    A[Electron Main Process (Node.js)] -->|IPC Bridge & safeExternalOpen| B[Default Web Browser]
-    A -->|Express REST API on Port 4242| C[SQLite Database - prep_tracker.db]
-    D[React 18 + Vite Frontend] -->|REST Calls| C
-    D -->|Web Audio API| E[Binaural & Ambient Sound Engine]
-    D -->|Context State Engine| F[RoleProvider & GamificationProvider]
-    D -->|LocalStorage Cache| G[XP, Badges & Quests Persistence]
-    H[Chrome Extension Scraper] -->|POST /api/submissions| C
+    A["Electron Main Process (Node.js)"] -->|"IPC Bridge & safeExternalOpen"| B["Default Web Browser"]
+    A -->|"Express REST API (Port 4242)"| C["SQLite Database (prep_tracker.db)"]
+    D["React 18 + Vite Frontend"] -->|"REST Calls"| C
+    D -->|"Web Audio API"| E["Binaural & Ambient Sound Engine"]
+    D -->|"State Engine"| F["RoleProvider & GamificationProvider"]
+    D -->|"LocalStorage"| G["XP, Badges & Quests Cache"]
+    H["Chrome Extension Scraper"] -->|"POST /api/submissions"| C
 ```
 
 ---
